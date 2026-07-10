@@ -29,25 +29,21 @@ export function sanitizeBonus(raw) {
 }
 
 /**
- * A dice expression ("2d6 + 4", "1d8+2", "d6") -> normalized formula, else null.
- * Requires at least one die term, so flat numbers ("5") and prose ("see text",
- * "WIS Save") null out. A trailing damage-type descriptor is common in generated
- * content ("2d6 + 4 shock damage") — we keep the leading roll and drop the words
- * rather than nulling the whole thing. Normalizes case and operator spacing.
+ * Salvage the maximal LEADING dice expression -> normalized formula, else null.
+ * Generated damage strings tack prose onto a real roll: "1d6 force",
+ * "2d6 + 4 shock damage", "1d10 + Tech/Engineering Skill Level". We take the
+ * leading run of dice/number terms and drop everything from the first
+ * non-numeric term on. Pure prose ("Intelligence (Tech) check...", "see text")
+ * has no leading die and nulls out, as does a flat number ("5").
  */
 export function sanitizeDice(raw) {
   if (typeof raw !== "string") return null;
-  let s = raw.trim().toLowerCase().replace(/^\+\s*/, "").replace(/\s+/g, " ").replace(/[.,;:]+$/, "");
+  let s = raw.trim().toLowerCase().replace(/^\+\s*/, "").replace(/\s+/g, " ");
   if (!s) return null;
-  // Leading dice/number expression + an OPTIONAL trailing word-only descriptor.
-  // The suffix has no digits/dice, so genuine prose ("see text") still fails the
-  // leading match and nulls out; only a real roll followed by a type survives.
   const term = "(?:\\d*d\\d+|\\d+)";
-  const m = s.match(new RegExp(`^(${term}(?:\\s*[+-]\\s*${term})*)(?:\\s+[a-z][a-z ]*)?$`));
-  if (!m) return null;
-  const formula = m[1];
-  if (!/d\d/.test(formula)) return null; // must contain a die, not just numbers
-  return formula.replace(/\s*([+-])\s*/g, " $1 ");
+  const m = s.match(new RegExp(`^${term}(?:\\s*[+-]\\s*${term})*`));
+  if (!m || !/d\d/.test(m[0])) return null; // must contain a die, not just numbers
+  return m[0].replace(/\s*([+-])\s*/g, " $1 ");
 }
 
 /** Skill check: 2d6 + skill rank (SWN convention). null if the actor lacks it. */
@@ -61,11 +57,21 @@ export function skillRoll(profile, actor, skillName) {
   };
 }
 
-/** Attack: d20 + the ability's hit bonus. null if hit_roll isn't a bonus. */
-export function attackRoll(profile, ability) {
+/**
+ * Attack: profile attack die + the ability's hit bonus. When hit_roll is empty
+ * (the common case — StoryTeller rarely fills it), fall back to the ACTOR's own
+ * attack_bonus IF the ability deals salvageable damage — a damaging ability is
+ * still an attack. Neither a hit bonus nor damage -> null (no button).
+ */
+export function attackRoll(profile, ability, actor) {
   const bonus = sanitizeBonus(ability?.system?.hit_roll);
-  if (bonus === null) return null;
-  return { formula: withBonus(profile.dice.attack, bonus), label: "Attack", flavor: null };
+  if (bonus !== null) {
+    return { formula: withBonus(profile.dice.attack, bonus), label: "Attack", flavor: null };
+  }
+  if (actor && sanitizeDice(ability?.system?.damage) !== null) {
+    return { formula: withBonus(profile.dice.attack, actor.system?.attack_bonus ?? 0), label: "Attack", flavor: null };
+  }
+  return null;
 }
 
 /** Damage: the ability's damage dice, sanitized. null if it isn't a dice string. */

@@ -111,7 +111,7 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
           id: i.id,
           name: i.name,
           system: i.system,
-          canAttack: attackRoll(context.profile, i) !== null,
+          canAttack: attackRoll(context.profile, i, this.document) !== null,
           canDamage: damageRoll(context.profile, i) !== null,
           uses: uses
             ? { max: uses.max, period: uses.period, remaining: Math.max(0, uses.max - spent) }
@@ -147,7 +147,7 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
 
   static _onRollAttack(event, target) {
     const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
-    if (item) this._postRoll(attackRoll(this._profile, item), `${item.name} — Attack`);
+    if (item) this._postRoll(attackRoll(this._profile, item, this.actor), `${item.name} — Attack`);
   }
 
   static _onRollDamage(event, target) {

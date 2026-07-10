@@ -45,13 +45,15 @@ test("sanitizeDice passes dice expressions, nulls garbage", () => {
   assert.equal(sanitizeDice(null), null);
 });
 
-// Generated damage strings routinely carry a trailing damage type; keep the roll.
-test("sanitizeDice strips a trailing damage-type descriptor", () => {
-  assert.equal(sanitizeDice("2d6 + 4 fire"), "2d6 + 4");
+// Generated damage strings tack prose onto a real roll; salvage the leading dice.
+// These are the EXACT shapes pulled from sandbox-swn abilities.
+test("sanitizeDice salvages the maximal leading dice expression", () => {
+  assert.equal(sanitizeDice("1d6 force"), "1d6");
+  assert.equal(sanitizeDice("3d6+2"), "3d6 + 2");
   assert.equal(sanitizeDice("2d6 + 4 shock damage"), "2d6 + 4");
-  assert.equal(sanitizeDice("1d8+2 force damage"), "1d8 + 2");
-  assert.equal(sanitizeDice("1d6 cold damage."), "1d6");
-  // still nulls when there's no leading roll, only prose
+  assert.equal(sanitizeDice("1d10 + Tech/Engineering Skill Level"), "1d10"); // stop at first non-numeric term
+  // pure prose with no leading die -> null
+  assert.equal(sanitizeDice("Intelligence (Tech) check vs Target Number 12"), null);
   assert.equal(sanitizeDice("roll 2d6 fire"), null);
 });
 
@@ -76,8 +78,19 @@ test("attackRoll builds d20 + hit bonus, null when hit_roll isn't a bonus", () =
   assert.equal(attackRoll(SWN, { system: { hit_roll: "-2" } }).formula, "1d20 - 2");
   assert.equal(attackRoll(SWN, { system: { hit_roll: "" } }), null);
   assert.equal(attackRoll(SWN, { system: { hit_roll: "melee" } }), null);
-  // fixture ability carries no hit_roll -> no attack button
+  // no hit_roll and no actor context -> no attack button
   assert.equal(attackRoll(SWN, character.items[0]), null);
+});
+
+// hit_roll is empty across StoryTeller content, so a damaging ability still
+// gets an attack button, rolled off the ACTOR's attack bonus.
+test("attackRoll falls back to the actor's attack bonus for damaging abilities", () => {
+  // character.attack_bonus = 1; ability has damage but no hit_roll
+  assert.equal(attackRoll(SWN, { system: { damage: "1d6 force" } }, character).formula, "1d20 + 1");
+  assert.equal(attackRoll(SWN, character.items[0], character).formula, "1d20 + 1");
+  // non-damaging ability (pure-prose damage), even with an actor -> null
+  assert.equal(attackRoll(SWN, { system: { damage: "see text" } }, character), null);
+  assert.equal(attackRoll(SWN, { system: {} }, character), null);
 });
 
 test("damageRoll sanitizes the damage dice, null on prose", () => {

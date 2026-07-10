@@ -25,9 +25,11 @@
     <div class="sw-stat sw-resource">
       <span class="sw-stat-label">{{this.label}}</span>
       <div class="sw-stat-value sw-stepper">
-        <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="-1" title="−1" {{#unless ../editable}}disabled{{/unless}}>&minus;</button>
+        <div class="sw-step-col">
+          <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="1" title="+1" {{#unless ../editable}}disabled{{/unless}}>+</button>
+          <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="-1" title="−1" {{#unless ../editable}}disabled{{/unless}}>&minus;</button>
+        </div>
         <input type="number" name="system.{{this.key}}.value" value="{{this.value}}" min="0" {{#unless ../editable}}readonly{{/unless}}>
-        <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="1" title="+1" {{#unless ../editable}}disabled{{/unless}}>+</button>
         <span class="sw-stat-sep">/</span>
         <input type="number" class="sw-max" name="system.{{this.key}}.max" value="{{this.max}}" min="0" {{#unless ../editMode}}disabled{{/unless}}>
       </div>
