@@ -1,0 +1,14 @@
+{
+  "name": "storyweald-foundry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Storyweald game system for Foundry VTT — data-driven ruleset profiles (SWN first).",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Quantum Entanglement Field",
+  "type": "ability",
+  "system": {
+    "contractVersion": 1,
+    "ability_type": "character",
+    "action": "main action",
+    "category": "control",
+    "damage": "1d8 + 2",
+    "save_dc": "WIS Save",
+    "range": "30ft Cone",
+    "description": "When the ability is triggered, a shimmering vortex of violet plasma erupts from the caster’s gauntlet, expanding into a 30‑foot cone. The air shivers with a low, resonant hum and a faint ozone scent fills the area as ethereal quantum threads coil around each target, drawing their sensory inputs into a lattice of static. Those affected see the world flicker like a broken hologram and feel an unsettling tug against their will.",
+    "effects": "Targets that fail their Will save become stunned until the end of their next turn and take 1d8+2 force damage. Targets that succeed take half damage and are not stunned.",
+    "mechanics": "Make a WIS save. On fail: Target takes 1d8+2 force damage and is stunned until the end of its next turn. On success: Target takes half damage and is not stunned."
+  }
+}

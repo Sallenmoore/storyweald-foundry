@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyweald.dev/foundry/actor-npc.schema.json",
+  "title": "Storyweald Foundry Actor — npc (NPCs and creatures)",
+  "description": "The full Foundry Actor document Storyweald pushes for a non-player character. StoryTeller Character (non-player) AND Creature both export as type 'npc'. Extracted from StoryTeller's SWN exporter (#861).",
+  "type": "object",
+  "required": ["name", "type", "system"],
+  "properties": {
+    "name": { "type": "string", "description": "StoryTeller Actor.name" },
+    "type": { "const": "npc" },
+    "img": {
+      "type": "string",
+      "description": "Portrait URL. StoryTeller Actor.image (absolute URL on push)."
+    },
+    "system": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["contractVersion", "hp", "armor_class", "attributes", "skills"],
+      "properties": {
+        "contractVersion": { "const": 1 },
+        "hp": { "$ref": "#/$defs/resource" },
+        "armor_class": { "type": "integer", "description": "StoryTeller Actor.ac" },
+        "attack_bonus": {
+          "type": "integer",
+          "description": "No StoryTeller source — system default (swnr export hardcodes ab=1)."
+        },
+        "saves": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "physical": { "type": "integer" },
+            "evasion": { "type": "integer" },
+            "mental": { "type": "integer" }
+          },
+          "description": "No StoryTeller source — system-computed. Optional."
+        },
+        "attributes": {
+          "type": "object",
+          "required": ["str", "dex", "con", "int", "wis", "cha"],
+          "additionalProperties": false,
+          "properties": {
+            "str": { "$ref": "#/$defs/attribute" },
+            "dex": { "$ref": "#/$defs/attribute" },
+            "con": { "$ref": "#/$defs/attribute" },
+            "int": { "$ref": "#/$defs/attribute" },
+            "wis": { "$ref": "#/$defs/attribute" },
+            "cha": { "$ref": "#/$defs/attribute" }
+          },
+          "description": "StoryTeller Actor.strength/dexterity/constitution/intelligence/wisdom/charisma (raw scores). modifier = (score-10)//2, floor."
+        },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skill" },
+          "description": "StoryTeller Actor.skills flattened to a list of {name, level}."
+        },
+        "system_strain": { "$ref": "#/$defs/resource", "description": "No StoryTeller source — swnr default. Optional." },
+        "effort": { "$ref": "#/$defs/resource", "description": "No StoryTeller source — swnr default. Optional." },
+        "level": { "type": "integer", "description": "StoryTeller Actor.level (creatures default 1)." },
+        "character_class": {
+          "type": "string",
+          "description": "StoryTeller Creature.archetype (SWN export maps archetype -> class for creatures)."
+        },
+        "species": { "type": "string", "description": "StoryTeller Actor.species" },
+        "speed": { "type": "string", "description": "StoryTeller Actor.speed, e.g. '30ft'." },
+        "goals": { "type": "string", "description": "StoryTeller Creature.goal." },
+        "biography": {
+          "type": "string",
+          "description": "HTML composed by the exporter from StoryTeller desc + backstory + history."
+        },
+        "creature_type": {
+          "type": "string",
+          "description": "StoryTeller Creature.type (e.g. 'animal', 'humanoid'). Empty for exported Characters."
+        },
+        "size": {
+          "type": "string",
+          "description": "StoryTeller Creature.size (tiny/small/medium/large/huge). Empty for exported Characters."
+        },
+        "legendary": {
+          "type": "boolean",
+          "description": "StoryTeller Creature.legendary."
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "Embedded Foundry Items: gear + abilities carried on the actor.",
+      "items": {
+        "oneOf": [
+          { "$ref": "https://storyweald.dev/foundry/item-gear.schema.json" },
+          { "$ref": "https://storyweald.dev/foundry/item-ability.schema.json" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "resource": {
+      "type": "object",
+      "required": ["value", "max"],
+      "additionalProperties": true,
+      "properties": {
+        "value": { "type": "integer" },
+        "max": { "type": "integer" }
+      }
+    },
+    "attribute": {
+      "type": "object",
+      "required": ["score"],
+      "additionalProperties": true,
+      "properties": {
+        "score": { "type": "integer" },
+        "modifier": { "type": "integer" }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": ["name", "level"],
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "level": { "type": "integer" }
+      }
+    }
+  }
+}

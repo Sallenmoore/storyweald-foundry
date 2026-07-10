@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyweald.dev/foundry/item-gear.schema.json",
+  "title": "Storyweald Foundry Item — gear",
+  "description": "The full Foundry Item document Storyweald pushes for a piece of gear (weapon/armor/consumable/utility/artifact). Extracted from StoryTeller's Item model + SWN item exporter (#861).",
+  "type": "object",
+  "required": ["name", "type", "system"],
+  "properties": {
+    "name": { "type": "string", "description": "StoryTeller Item.name" },
+    "type": { "const": "gear" },
+    "img": { "type": "string", "description": "StoryTeller Item.image (only pushed when the URL has a real file extension)." },
+    "system": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["contractVersion"],
+      "properties": {
+        "contractVersion": { "const": 1 },
+        "description": {
+          "type": "string",
+          "description": "HTML. Composed by the exporter from StoryTeller history + features + duration."
+        },
+        "cost": {
+          "type": "integer",
+          "description": "StoryTeller Item.cost (IntAttr, base currency; unified to int on 2026-07-08)."
+        },
+        "weight": {
+          "type": "string",
+          "description": "StoryTeller Item.weight (free-text, e.g. '0.8 kg')."
+        },
+        "rarity": {
+          "type": "string",
+          "enum": ["common", "uncommon", "rare", "very rare", "legendary", "artifact"],
+          "description": "StoryTeller Item.rarity."
+        },
+        "item_type": {
+          "type": "string",
+          "enum": ["weapon", "armor", "consumable", "utility", "artifact"],
+          "description": "StoryTeller Item.item_type (derived property; canonical routing enum)."
+        },
+        "category": {
+          "type": "string",
+          "description": "StoryTeller Item.category (free-text descriptive subtype, e.g. 'Energy Weapon')."
+        },
+        "consumable": {
+          "type": "boolean",
+          "description": "StoryTeller Item.consumable (model field; NOTE: page_data() exposes it under the typo key 'consumbale')."
+        },
+        "duration": { "type": "string", "description": "StoryTeller Item.duration." },
+        "attunement": {
+          "type": "string",
+          "description": "StoryTeller Item.attunement (#837). NOT in page_data() today — wiring requires an exporter change (T4)."
+        },
+        "requirement": {
+          "type": "string",
+          "description": "StoryTeller Item.requirement (#837, the hard gate to wield). NOT in page_data() today — exporter change (T4)."
+        },
+        "material": {
+          "type": "string",
+          "description": "StoryTeller Item.material. NOT in page_data() today — exporter change (T4)."
+        },
+        "size_class": {
+          "type": "string",
+          "description": "StoryTeller Item.size_class. NOT in page_data() today — exporter change (T4)."
+        }
+      }
+    }
+  }
+}

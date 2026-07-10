@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyweald.dev/foundry/item-ability.schema.json",
+  "title": "Storyweald Foundry Item — ability",
+  "description": "The full Foundry Item document Storyweald pushes for an ability. Abilities are embedded Items of type 'ability' on the actor. Extracted from StoryTeller's Ability model + page_data() envelope (#858/#861).",
+  "type": "object",
+  "required": ["name", "type", "system"],
+  "properties": {
+    "name": { "type": "string", "description": "StoryTeller Ability.name" },
+    "type": { "const": "ability" },
+    "img": { "type": "string", "description": "StoryTeller Ability.image (optional)." },
+    "system": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["contractVersion"],
+      "properties": {
+        "contractVersion": { "const": 1 },
+        "ability_type": {
+          "type": "string",
+          "enum": ["character", "item", "vehicle", "creature"],
+          "description": "StoryTeller Ability.type (which kind of owner wields it)."
+        },
+        "action": {
+          "type": "string",
+          "enum": ["main action", "bonus action", "reaction", "free action", "passive"],
+          "description": "StoryTeller Ability.action."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["offensive", "defensive", "social", "support", "control", "movement", "utility"],
+          "description": "StoryTeller Ability.category."
+        },
+        "hit_roll": { "type": "string", "description": "StoryTeller Ability.hit_roll (attack bonus text, e.g. '+6')." },
+        "damage": { "type": "string", "description": "StoryTeller Ability.dice_roll (damage/effect dice, e.g. '2d6 + 4'). RENAMED: StoryTeller's field is 'dice_roll'." },
+        "save_dc": { "type": "string", "description": "StoryTeller Ability.save_dc (e.g. 'WIS Save', 'DEX 15')." },
+        "element": { "type": "string", "description": "StoryTeller Ability.element." },
+        "target": { "type": "string", "description": "StoryTeller Ability.target." },
+        "range": { "type": "string", "description": "StoryTeller Ability.range (e.g. '30ft Cone')." },
+        "uses": { "type": "string", "description": "StoryTeller Ability.uses." },
+        "duration": { "type": "string", "description": "StoryTeller Ability.duration." },
+        "description": { "type": "string", "description": "StoryTeller Ability.description (flavor text)." },
+        "effects": { "type": "string", "description": "StoryTeller Ability.effects (hard outcome)." },
+        "mechanics": { "type": "string", "description": "StoryTeller Ability.mechanics (raw rules text)." },
+        "notes": { "type": "string", "description": "StoryTeller Ability.notes." }
+      }
+    }
+  }
+}

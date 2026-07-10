@@ -1,0 +1,185 @@
+{
+  "name": "Rex Kellan Viro",
+  "type": "character",
+  "img": "https://storyweald.com/image/6a3197f46f9fd9a99a000cb3/orig",
+  "system": {
+    "contractVersion": 1,
+    "hp": {
+      "value": 30,
+      "max": 30
+    },
+    "armor_class": 15,
+    "attack_bonus": 1,
+    "saves": {
+      "physical": 15,
+      "evasion": 14,
+      "mental": 15
+    },
+    "attributes": {
+      "str": {
+        "score": 12,
+        "modifier": 1
+      },
+      "dex": {
+        "score": 14,
+        "modifier": 2
+      },
+      "con": {
+        "score": 13,
+        "modifier": 1
+      },
+      "int": {
+        "score": 18,
+        "modifier": 4
+      },
+      "wis": {
+        "score": 12,
+        "modifier": 1
+      },
+      "cha": {
+        "score": 11,
+        "modifier": 0
+      }
+    },
+    "skills": [
+      {
+        "name": "Administer",
+        "level": 3
+      },
+      {
+        "name": "Connect",
+        "level": 2
+      },
+      {
+        "name": "Exert",
+        "level": 3
+      },
+      {
+        "name": "Fix",
+        "level": 2
+      },
+      {
+        "name": "Heal",
+        "level": 3
+      },
+      {
+        "name": "Know",
+        "level": 3
+      },
+      {
+        "name": "Lead",
+        "level": 0
+      },
+      {
+        "name": "Notice",
+        "level": 1
+      },
+      {
+        "name": "Perform",
+        "level": 2
+      },
+      {
+        "name": "Pilot",
+        "level": 2
+      },
+      {
+        "name": "Program",
+        "level": 4
+      },
+      {
+        "name": "Punch",
+        "level": 2
+      },
+      {
+        "name": "Shoot",
+        "level": 2
+      },
+      {
+        "name": "Sneak",
+        "level": 3
+      },
+      {
+        "name": "Stab",
+        "level": 3
+      },
+      {
+        "name": "Survive",
+        "level": 1
+      },
+      {
+        "name": "Talk",
+        "level": 2
+      },
+      {
+        "name": "Trade",
+        "level": 0
+      },
+      {
+        "name": "Work",
+        "level": 2
+      }
+    ],
+    "system_strain": {
+      "value": 0,
+      "max": 0
+    },
+    "effort": {
+      "value": 0,
+      "max": 0
+    },
+    "level": 1,
+    "character_class": "Field Operative Specializing in Quantum Lattice Manipulation",
+    "species": "Human",
+    "speed": "30ft",
+    "biography": "<p>sleek cybernetic visor, reinforced nano-fiber armor, scar across left cheek, silver braided hair, lean build, angular jaw, matte black boots, plasma wrist implants, silver-laced gloves, high-tech wrist communicator, dark gray lab coat, glowing blue circuitry tattoos, glinting titanium shoulders, cybernetic eye, holographic data overlay, stoic posture, wrist-mounted data ring, low-profile tactical helm, carbon fiber gauntlets, faint neon pulse lines</p>\n<p>Born in 2078 on the mining outpost of Luna-3, Rex Kellan Viro grew up beneath the regolith with the clamor of drills and the glow of hydroponic lights. From a young age he was fascinated by the anomalous quantum signatures that pulsed through the moon's crust, rumors of a buried lattice that could bend space‑time. His father, a shaper of nano‑composite structures, taught him to repair broken circuitry with a steady hand, while his mother kept a ledger of the outpost's resource flows. The combination of practical skills and a curiosity for the unknown would later become Rex's greatest asset.</p>\n<p>At 18, Rex volunteered for the nascent Conclave project, drawn by Dr. Elara Voss's promise to harness the lattice for humanity's benefit. After rigorous training in quantum manipulation and stealth protocols, he became a Field Operative Specializing in Quantum Lattice Manipulation. His reputation for meticulous attention to detail and pragmatic decision‑making earned him a place in the inner sanctum on Luna‑3, where he monitored lattice vibrations and guarded against sabotage. When the Null faction launched a covert strike against a Conclave node, Rex was among the first to repel the assault, cementing his loyalty to the Conclave's mission.</p>\n<p>Yet the moment that defined Rex was the night of the lattice destabilization in 2139. While conducting a high‑risk experiment to expand lattice capacity, a rogue Null drone breached the containment protocols. Rex's swift interference prevented a catastrophic lattice collapse, but at great cost: the drone was destroyed, and Rex sustained a deep burn scar on his left cheek, a reminder of the fragile balance between progress and peril. Now, with Synthetix's influence tightening, Rex walks the thin line between the Conclave's ambition and the lattice's ethical stewardship, his quiet resolve hidden beneath a calm corporate veneer.</p>"
+  },
+  "items": [
+    {
+      "name": "Quantum Entanglement Field",
+      "type": "ability",
+      "system": {
+        "contractVersion": 1,
+        "ability_type": "character",
+        "action": "main action",
+        "category": "control",
+        "damage": "1d8 + 2",
+        "save_dc": "WIS Save",
+        "range": "30ft Cone",
+        "description": "When the ability is triggered, a shimmering vortex of violet plasma erupts from the caster’s gauntlet, expanding into a 30‑foot cone. The air shivers with a low, resonant hum and a faint ozone scent fills the area as ethereal quantum threads coil around each target, drawing their sensory inputs into a lattice of static. Those affected see the world flicker like a broken hologram and feel an unsettling tug against their will.",
+        "effects": "Targets that fail their Will save become stunned until the end of their next turn and take 1d8+2 force damage. Targets that succeed take half damage and are not stunned.",
+        "mechanics": "Make a WIS save. On fail: Target takes 1d8+2 force damage and is stunned until the end of its next turn. On success: Target takes half damage and is not stunned."
+      }
+    },
+    {
+      "name": "Phase-Shift Shield",
+      "type": "ability",
+      "system": {
+        "contractVersion": 1,
+        "ability_type": "character",
+        "action": "bonus action",
+        "category": "defensive",
+        "damage": "2d6 + 4",
+        "save_dc": "DEX Save, DC 15",
+        "range": "Self, 30ft radius",
+        "description": "When activated, a shimmering holographic lattice engulfs the caster, pulsing with turquoise and magenta patterns. A low-frequency hum rises, tinged with ozone, as faint sparks ripple along the edges of the field. The visual effect resembles a digital aurora, creating a dazzling, protective bubble that instantly deters attackers.",
+        "effects": "Any enemy who attempts an attack within the 30ft radius must succeed a DEX save. On a failure, the enemy takes 2d6 + 4 damage and is shocked, suffering disadvantage on attack rolls until the start of their next turn. On a success, the enemy takes no damage and is not shocked.",
+        "mechanics": "Make a DEX save. On a failure, the attacker takes 2d6 + 4 damage and is shocked (disadvantage on attack rolls) until the start of their next turn. On a success, the attacker takes no damage and is not shocked."
+      }
+    },
+    {
+      "name": "Eldridian Sceptre",
+      "type": "gear",
+      "system": {
+        "contractVersion": 1,
+        "description": "<h3>Effects</h3>\nEchoing Barrier (passive, support): As the wielder activates this ability, a shimmering barrier of soft blue and white light erupts around them, filling the air with the sweet scent of blooming wildflowers. The sound of gentle chimes echoes through the area, creating a sense of calm focus. The barrier seems to absorb and deflect incoming attacks, protecting not just the wielder but also their allies within its radius.\n<h3>History</h3>\n<h5>Introduction to the Eldridian Sceptre</h5>\n<p>In the realm of Elyriaea, where ancient magic and mystery entwine with the whispers of forgotten civilizations, the Eldridian Sceptre stands as a beacon of power and intrigue. Forged in the heart of Eldrida's Peak by a secretive group of mages, this legendary item is imbued with the essence of celestial bodies, holding the key to unlock the hidden patterns of the universe. Its history is a tapestry woven from threads of discovery, loss, and rebirth, reflecting the very essence of Elyriaea itself.</p>\n<h5>The Era of Creation</h5>\n<p>The story of the Eldridian Sceptre begins in an era long past, when the ancient civilization that once thrived on Eldrida's Peak was at its zenith. This enigmatic culture, known for their profound understanding of celestial mechanics and arcane arts, sought to create an artifact that would bridge the gap between the mortal realm and the cosmos. Through decades of dedicated research and experimentation, a secretive group of mages succeeded in forging the Eldridian Sceptre. The sceptre was said to contain not only the power of the elements but also the essence of stars and planets, making it an unparalleled tool for those who sought to understand and manipulate the universe's hidden patterns.</p>\n<h5>The Age of Lost Knowledge</h5>\n<p>Following its creation, the Eldridian Sceptre was used by its creators to achieve great feats, advancing their civilization to unprecedented heights. However, as with all things, time brought about decline and eventual downfall. The civilization vanished, leaving behind only remnants of their knowledge and achievements. The Eldridian Sceptre, once a symbol of their power and wisdom, was lost to the sands of time, hidden away in the depths of Eldrida's Peak. For centuries, its existence became a myth, a legend whispered among scholars and treasure hunters who dared to dream of uncovering its secrets.</p>\n<h5>The Age of Rediscovery</h5>\n<p>The dawn of the Age of Rebirth marked a significant turning point in the history of Elyriaea. As the world began to heal from the wounds of past conflicts and magical cataclysms, interest in ancient artifacts and forgotten knowledge saw a resurgence. It was during this era that the Eldridian Sceptre resurfaced, found by a powerful collector who recognized its potential to further their ambitions. News of its rediscovery sent ripples throughout Elyriaea, drawing mages, adventurers, and scholars to Eldrida's Peak in pursuit of the sceptre and the secrets it holds.</p>\n<h5>The Contemporary Era</h5>\n<p>Today, the Eldridian Sceptre remains intact, radiating a faint aura of mystical energy. Its current status as a focal point for those seeking power, knowledge, or redemption has made it a central figure in the geopolitics of Elyriaea. Alliances are formed and rivalries are sparked over the mere possibility of gaining control over the sceptre. The journey to claim it is perilous, fraught with ancient traps, mysterious creatures, and competing treasure hunters. Yet, for many, the potential reward is worth the risk. The sceptre's power to unlock the universe's secrets promises not only personal gain but also a deeper understanding of Elyriaea itself, making its pursuit a noble endeavor for some and a dangerous obsession for others.</p>\n<h5>The Future of the Eldridian Sceptre</h5>\n<p>As the Age of Rebirth continues to unfold, the fate of the Eldridian Sceptre remains uncertain. Will it fall into the hands of those who would use its power for the greater good, or will it become a tool for domination and chaos? The answer lies in the hearts of those who seek it and the paths they choose to tread. One thing is certain, however: the Eldridian Sceptre's journey is far from over. Its legend will continue to inspire quests, forge alliances, and spark conflicts, leaving an indelible mark on the history of Elyriaea. The sceptre stands as a testament to the ingenuity and ambition of those who came before, a beacon calling out to those brave enough to uncover its secrets and wield its power.</p>",
+        "cost": 0,
+        "weight": "0.8 kg",
+        "rarity": "legendary",
+        "item_type": "utility",
+        "category": "item",
+        "consumable": false,
+        "duration": "Permanent, but its power can only be unlocked by one who has spent a decade studying the ancient lore of Elyriaea"
+      }
+    }
+  ]
+}

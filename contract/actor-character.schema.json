@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://storyweald.dev/foundry/actor-character.schema.json",
+  "title": "Storyweald Foundry Actor — character (PC)",
+  "description": "The full Foundry Actor document Storyweald pushes for a player character. Extracted from StoryTeller's SWN exporter (#861); field names are clean snake_case derived from StoryTeller's own fields.",
+  "type": "object",
+  "required": ["name", "type", "system"],
+  "properties": {
+    "name": { "type": "string", "description": "StoryTeller Character.name" },
+    "type": { "const": "character" },
+    "img": {
+      "type": "string",
+      "description": "Portrait URL. StoryTeller Character.image (absolute URL on push)."
+    },
+    "system": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["contractVersion", "hp", "armor_class", "attributes", "skills", "level"],
+      "properties": {
+        "contractVersion": { "const": 1 },
+        "hp": { "$ref": "#/$defs/resource" },
+        "armor_class": { "type": "integer", "description": "StoryTeller Actor.ac" },
+        "attack_bonus": {
+          "type": "integer",
+          "description": "No StoryTeller source — system default (swnr export hardcodes ab=1). Carried for forward compat."
+        },
+        "saves": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "physical": { "type": "integer" },
+            "evasion": { "type": "integer" },
+            "mental": { "type": "integer" }
+          },
+          "description": "No StoryTeller source — swnr computes saves from attributes. Present for the resource strip; optional."
+        },
+        "attributes": {
+          "type": "object",
+          "required": ["str", "dex", "con", "int", "wis", "cha"],
+          "additionalProperties": false,
+          "properties": {
+            "str": { "$ref": "#/$defs/attribute" },
+            "dex": { "$ref": "#/$defs/attribute" },
+            "con": { "$ref": "#/$defs/attribute" },
+            "int": { "$ref": "#/$defs/attribute" },
+            "wis": { "$ref": "#/$defs/attribute" },
+            "cha": { "$ref": "#/$defs/attribute" }
+          },
+          "description": "StoryTeller Actor.strength/dexterity/constitution/intelligence/wisdom/charisma (raw scores). modifier = (score-10)//2, floor."
+        },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skill" },
+          "description": "StoryTeller Actor.skills, a {name: level} map flattened to a list. level is the skill rank (SWN 2d6 convention: 0-4; other genres may be negative)."
+        },
+        "system_strain": {
+          "$ref": "#/$defs/resource",
+          "description": "No StoryTeller source — swnr default. Optional."
+        },
+        "effort": {
+          "$ref": "#/$defs/resource",
+          "description": "No StoryTeller source — swnr default. Optional."
+        },
+        "level": { "type": "integer", "description": "StoryTeller Actor.level" },
+        "character_class": {
+          "type": "string",
+          "description": "StoryTeller Character.occupation (SWN export maps occupation -> class)."
+        },
+        "species": { "type": "string", "description": "StoryTeller Actor.species" },
+        "speed": { "type": "string", "description": "StoryTeller Actor.speed, e.g. '30ft'." },
+        "goals": { "type": "string", "description": "StoryTeller Actor.goal (Character page_data omits it today; usually empty)." },
+        "biography": {
+          "type": "string",
+          "description": "HTML. Composed by the exporter from StoryTeller desc + backstory + history."
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "Embedded Foundry Items: gear + abilities carried on the actor.",
+      "items": {
+        "oneOf": [
+          { "$ref": "https://storyweald.dev/foundry/item-gear.schema.json" },
+          { "$ref": "https://storyweald.dev/foundry/item-ability.schema.json" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "resource": {
+      "type": "object",
+      "required": ["value", "max"],
+      "additionalProperties": true,
+      "properties": {
+        "value": { "type": "integer" },
+        "max": { "type": "integer" }
+      }
+    },
+    "attribute": {
+      "type": "object",
+      "required": ["score"],
+      "additionalProperties": true,
+      "properties": {
+        "score": { "type": "integer" },
+        "modifier": { "type": "integer" }
+      }
+    },
+    "skill": {
+      "type": "object",
+      "required": ["name", "level"],
+      "additionalProperties": true,
+      "properties": {
+        "name": { "type": "string" },
+        "level": { "type": "integer" }
+      }
+    }
+  }
+}

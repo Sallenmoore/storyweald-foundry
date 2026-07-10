@@ -1,0 +1,155 @@
+{
+  "name": "Glimmerwing",
+  "type": "npc",
+  "img": "https://storyweald.com/image/6a4e34c059d858e81a708bf9/orig",
+  "system": {
+    "contractVersion": 1,
+    "hp": {
+      "value": 10,
+      "max": 10
+    },
+    "armor_class": 16,
+    "attack_bonus": 1,
+    "attributes": {
+      "str": {
+        "score": 5,
+        "modifier": -3
+      },
+      "dex": {
+        "score": 20,
+        "modifier": 5
+      },
+      "con": {
+        "score": 12,
+        "modifier": 1
+      },
+      "int": {
+        "score": 18,
+        "modifier": 4
+      },
+      "wis": {
+        "score": 15,
+        "modifier": 2
+      },
+      "cha": {
+        "score": 10,
+        "modifier": 0
+      }
+    },
+    "skills": [
+      {
+        "name": "Acrobatics",
+        "level": 5
+      },
+      {
+        "name": "AnimalHandling",
+        "level": 2
+      },
+      {
+        "name": "Arcana",
+        "level": 4
+      },
+      {
+        "name": "Athletics",
+        "level": -3
+      },
+      {
+        "name": "Deception",
+        "level": 0
+      },
+      {
+        "name": "History",
+        "level": 4
+      },
+      {
+        "name": "Insight",
+        "level": 2
+      },
+      {
+        "name": "Intimidation",
+        "level": 0
+      },
+      {
+        "name": "Investigation",
+        "level": 4
+      },
+      {
+        "name": "Medicine",
+        "level": 4
+      },
+      {
+        "name": "Nature",
+        "level": 2
+      },
+      {
+        "name": "Perception",
+        "level": 2
+      },
+      {
+        "name": "Performance",
+        "level": 0
+      },
+      {
+        "name": "Persuasion",
+        "level": 0
+      },
+      {
+        "name": "Religion",
+        "level": 2
+      },
+      {
+        "name": "SleightOfHand",
+        "level": 5
+      },
+      {
+        "name": "Stealth",
+        "level": 5
+      },
+      {
+        "name": "Survival",
+        "level": 2
+      }
+    ],
+    "level": 1,
+    "character_class": "Messenger: Courier",
+    "species": "Luminous Avian",
+    "speed": "30ft",
+    "goals": "{\"public\": \"Deliver ancient knowledge to those who seek it\", \"private\": \"Uncover the secrets of the cosmic code and use its power to bring balance to the realm\"}",
+    "creature_type": "animal",
+    "size": "tiny",
+    "legendary": false,
+    "biography": "<p>The Glimmerwing is a creature of breathtaking beauty, with iridescent feathers that shimmer and glow in the light. Its ethereal song can be heard for miles, a haunting melody that seems to capture the very essence of the celestial music that governs the universe. As it moves, its wings beat at a hypnotic pace, leaving trails of glittering stardust in its wake.</p>\n<p>In the dawn of time, when the celestial architects shaped the land with their divine essence, the Glimmerwing was born from the very fabric of the universe. It was said to possess the power of the stars, and its song could charm even the most skeptical of hearts. As the ages passed, the Glimmerwing became a messenger for the gods, carrying ancient knowledge on its delicate wings. But as the Great Devastation shook the land, the Glimmerwing's role was forgotten, and it was left to roam the skies, searching for those who would unlock its secrets and restore balance to the realm.</p>\n<p>Today, the Glimmerwing is a rare sight, seen only by those who are pure of heart and strong of spirit. Its appearance is said to herald great change, and its song is rumored to hold the power to heal even the most grievous of wounds. Despite its elusive nature, the Glimmerwing remains a powerful symbol of hope in a world torn apart by darkness and destruction.</p>"
+  },
+  "items": [
+    {
+      "name": "Mindshackle",
+      "type": "ability",
+      "system": {
+        "contractVersion": 1,
+        "ability_type": "creature",
+        "action": "main action",
+        "category": "control",
+        "save_dc": "WIS Save",
+        "range": "30ft Line",
+        "description": "As the wielder focuses their mind, a shimmering thread of psychic energy shoots forth, attempting to ensnare the target's thoughts. The air seems to vibrate with anticipation, and the scent of ozone wafts through the air as the ability is triggered. If successful, the target's eyes glaze over, their movements becoming stiff and jerky as they struggle against the mental shackles.",
+        "effects": "The target becomes Restrained and Stunned for 1 minute, unable to take reactions. A creature can repeat the saving throw at the end of each turn, ending the effect on itself on success.",
+        "mechanics": "Make a WIS Save check. On fail: the target is Restrained and Stunned for 1 minute. On success: the effect is negated."
+      }
+    },
+    {
+      "name": "Shield of Eldrid",
+      "type": "ability",
+      "system": {
+        "contractVersion": 1,
+        "ability_type": "creature",
+        "action": "passive",
+        "category": "defensive",
+        "save_dc": "DEX Save",
+        "range": "Self",
+        "description": "As the wielder stands firm, a shimmering aura erupts around them, reminiscent of the ancient magic that once protected the realms of Eldrid. The air is filled with the sweet scent of blooming wildflowers, and the sound of gentle chimes echoes through the atmosphere. The aura manifests as a series of intricate, swirling patterns that dance across the wielder's armor, leaving a trail of glittering stardust in its wake.",
+        "effects": "The wielder gains a +2 bonus to Armor Class and is immune to being knocked prone. Additionally, any creature within 5 feet of the wielder has disadvantage on attack rolls against them.",
+        "mechanics": "The Shield of Eldrid ability grants the wielder a passive bonus to Armor Class. Any creature attempting to attack the wielder must make a DEX Save check. On fail: the attacker has disadvantage on the attack roll. On success: the attack roll is made normally."
+      }
+    }
+  ]
+}
