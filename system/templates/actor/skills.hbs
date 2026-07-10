@@ -18,7 +18,10 @@
     </thead>
     <tbody>
       {{#each system.skills}}
-      <tr><td>{{this.name}}</td><td class="sw-skill-level">{{this.level}}</td></tr>
+      <tr class="sw-skill-row" data-action="rollSkill" data-skill="{{this.name}}" title="Roll {{this.name}} (2d6)">
+        <td>{{this.name}}</td>
+        <td class="sw-skill-level">{{this.level}}</td>
+      </tr>
       {{else}}
       <tr><td colspan="2" class="sw-empty">{{localize "STORYWEALD.Empty.skills"}}</td></tr>
       {{/each}}

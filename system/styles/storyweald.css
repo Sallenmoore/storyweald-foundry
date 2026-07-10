@@ -202,6 +202,12 @@
 }
 .sw-skill-level { text-align: center; font-weight: 700; width: 4em; }
 
+/* Clickable skill rows / save chips roll to chat. */
+.sw-skill-row { cursor: pointer; }
+.sw-skill-row:hover { background: var(--sw-panel); }
+.sw-save[data-action] { cursor: pointer; }
+.sw-save[data-action]:hover { border-color: var(--sw-accent); }
+
 /* --- Item lists ----------------------------------------------------------- */
 .sw-items { list-style: none; margin: 0; padding: 0; }
 .sw-item {
@@ -219,6 +225,113 @@
   color: var(--sw-muted);
   font-size: 0.85em;
   text-align: right;
+}
+
+/* Ability row: identity block (opens the sheet) + roll buttons. */
+.sw-ability {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.sw-item-main {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5em;
+  min-width: 0;
+  cursor: pointer;
+}
+.sw-item-actions {
+  display: flex;
+  gap: 0.35em;
+  flex-shrink: 0;
+}
+.sw-roll-btn {
+  cursor: pointer;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3em 0.7em;
+  border-radius: 4px;
+  border: 1px solid var(--sw-line);
+  background: var(--sw-panel);
+  color: var(--sw-text);
+  line-height: 1;
+  width: auto;
+}
+.sw-roll-attack { border-color: var(--sw-gilt); color: var(--sw-gilt); }
+.sw-roll-damage { border-color: var(--sw-accent); color: var(--sw-accent); }
+.sw-roll-btn:hover { background: var(--sw-line); }
+
+/* --- Chat roll card ------------------------------------------------------- */
+/* Chat renders outside the sheet, so the palette is redeclared here. */
+.sw-chat-card {
+  --sw-panel: #1d222b;
+  --sw-line: #333c49;
+  --sw-text: #f2f5f8;
+  --sw-muted: #9fb0c3;
+  --sw-accent: #6fae7a;
+  --sw-gilt: #d8b24a;
+  background: #14171d;
+  color: var(--sw-text);
+  border: 1px solid var(--sw-line);
+  border-radius: 5px;
+  padding: 0.5em 0.6em;
+}
+.sw-chat-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.sw-chat-portrait {
+  width: 2.6em;
+  height: 2.6em;
+  object-fit: cover;
+  border: 1px solid var(--sw-gilt);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.sw-chat-titles { flex: 1; min-width: 0; }
+.sw-chat-actor {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sw-muted);
+}
+.sw-chat-title { font-weight: 700; font-size: 1.05em; }
+.sw-chat-flavor { color: var(--sw-muted); font-size: 0.85em; }
+.sw-chat-total {
+  font-size: 1.8em;
+  font-weight: 800;
+  color: var(--sw-gilt);
+  padding: 0 0.15em;
+}
+.sw-chat-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.4em;
+  padding-top: 0.4em;
+  border-top: 1px solid var(--sw-line);
+  flex-wrap: wrap;
+}
+.sw-chat-formula {
+  font-family: monospace;
+  color: var(--sw-muted);
+}
+.sw-chat-dice { display: flex; gap: 0.3em; flex-wrap: wrap; }
+.sw-die {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0.15em 0.3em;
+  text-align: center;
+  font-weight: 700;
+  background: var(--sw-panel);
+  border: 1px solid var(--sw-line);
+  border-radius: 3px;
 }
 
 /* --- Field grids / prose -------------------------------------------------- */

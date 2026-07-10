@@ -18,6 +18,9 @@ const ability = readJSON("../contract/item-ability.schema.json");
 const allowed = {
   actor: new Set([...roots(npc), ...roots(gear), ...roots(ability)]),
   item: new Set([...roots(gear), ...roots(ability)]),
+  // Chat cards render evaluated roll data, not contract fields, but may echo an
+  // actor/item field; allow the full union so a stray typo is still caught.
+  chat: new Set([...roots(npc), ...roots(gear), ...roots(ability)]),
 };
 
 // LIMITATION: pure string scan. It extracts the first path segment after

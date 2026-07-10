@@ -63,6 +63,9 @@
   "STORYWEALD.Ability.mechanics": "Mechanics",
   "STORYWEALD.Ability.notes": "Notes",
 
+  "STORYWEALD.Roll.attack": "Attack",
+  "STORYWEALD.Roll.damage": "Damage",
+
   "STORYWEALD.Tab.skills": "Skills",
   "STORYWEALD.Tab.inventory": "Inventory",
   "STORYWEALD.Tab.abilities": "Abilities",

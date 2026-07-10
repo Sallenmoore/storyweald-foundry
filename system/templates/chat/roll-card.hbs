@@ -1,0 +1,19 @@
+<div class="sw-chat-card">
+  <header class="sw-chat-head">
+    <img class="sw-chat-portrait" src="{{img}}" alt="{{actorName}}">
+    <div class="sw-chat-titles">
+      <div class="sw-chat-actor">{{actorName}}</div>
+      <div class="sw-chat-title">{{title}}</div>
+      {{#if flavor}}<div class="sw-chat-flavor">{{flavor}}</div>{{/if}}
+    </div>
+    <div class="sw-chat-total">{{total}}</div>
+  </header>
+  <div class="sw-chat-body">
+    <span class="sw-chat-formula">{{formula}}</span>
+    <span class="sw-chat-dice">
+      {{#each dice}}
+        {{#each this.results}}<span class="sw-die" data-faces="{{../faces}}">{{this}}</span>{{/each}}
+      {{/each}}
+    </span>
+  </div>
+</div>

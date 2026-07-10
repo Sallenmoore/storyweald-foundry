@@ -41,7 +41,7 @@
 
   <div class="sw-saves">
     {{#each saves}}
-    <div class="sw-save">
+    <div class="sw-save" data-action="rollSave" data-save="{{this.key}}" title="Roll {{this.label}} save (1d20)">
       <span class="sw-save-label">{{this.label}}</span>
       <span class="sw-save-value">{{this.value}}</span>
     </div>
