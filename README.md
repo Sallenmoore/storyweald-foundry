@@ -45,6 +45,13 @@ npm install   # ajv (test-only dependency)
 node --test test/
 ```
 
+### Releases (maintainers)
+
+Releases are cut by pushing a `v<version>` tag whose number **must match** `system/system.json`'s
+`version` (the workflow fails loudly otherwise). Use `scripts/release.sh <version>` — it verifies the
+match, runs the tests, and pushes the tag; `.github/workflows/release.yml` then zips `system/` and
+publishes the GitHub release the manifest URL above points at.
+
 ## License
 
 MIT (code). Contains no ruleset text — mechanics-level compatibility only. Stars Without Number

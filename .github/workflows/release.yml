@@ -1,0 +1,45 @@
+name: release
+
+# Fires when a v* tag is pushed. Zips system/ (system.json at the zip root —
+# Foundry convention) and publishes a GitHub release with both storyweald.zip
+# and system.json attached, so the manifest URL in system.json
+# (releases/latest/download/system.json) resolves.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify system.json version matches tag
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          manifest="$(jq -r .version system/system.json)"
+          echo "tag=$tag  system.json=$manifest"
+          if [ "$tag" != "$manifest" ]; then
+            echo "::error::tag v$tag does not match system.json version $manifest — bump system.json or fix the tag"
+            exit 1
+          fi
+
+      - name: Build storyweald.zip (system.json at zip root)
+        run: |
+          cd system && zip -r ../storyweald.zip . -x '.gitkeep' && cd ..
+          unzip -l storyweald.zip
+          unzip -l storyweald.zip | grep -qE '[[:space:]]system\.json$' \
+            || { echo "::error::system.json is not at the zip root"; exit 1; }
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            storyweald.zip system/system.json \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes
