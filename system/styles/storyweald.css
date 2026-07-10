@@ -345,13 +345,14 @@
 .sw-step-col {
   display: inline-flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0;
 }
 .sw-step-col .sw-step {
   min-width: 24px;
-  min-height: 24px;
+  min-height: 18px;
   padding: 0;
   font-size: 0.8em;
+  line-height: 1;
   background: none;
   border-color: transparent;
   color: var(--sw-muted);
