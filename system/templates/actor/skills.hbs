@@ -1,0 +1,27 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="skills">
+  <div class="sw-attributes">
+    {{#each attributes}}
+    <div class="sw-attr" title="{{this.label}}">
+      <span class="sw-attr-key">{{this.key}}</span>
+      <span class="sw-attr-score">{{this.score}}</span>
+      <span class="sw-attr-mod">{{this.modifier}}</span>
+    </div>
+    {{/each}}
+  </div>
+
+  <table class="sw-skills">
+    <thead>
+      <tr>
+        <th>{{localize "STORYWEALD.Actor.skills"}}</th>
+        <th>{{localize "STORYWEALD.Actor.skill_level"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each system.skills}}
+      <tr><td>{{this.name}}</td><td class="sw-skill-level">{{this.level}}</td></tr>
+      {{else}}
+      <tr><td colspan="2" class="sw-empty">{{localize "STORYWEALD.Empty.skills"}}</td></tr>
+      {{/each}}
+    </tbody>
+  </table>
+</section>

@@ -1,0 +1,49 @@
+<div class="sw-item-sheet">
+  <header class="sw-item-header">
+    <img class="sw-portrait sw-portrait-sm" src="{{item.img}}" alt="{{item.name}}">
+    <input class="sw-name" type="text" name="name" value="{{item.name}}" {{#unless editable}}readonly{{/unless}}>
+    <span class="sw-type-badge">{{#if isGear}}{{localize "TYPES.Item.gear"}}{{else}}{{localize "TYPES.Item.ability"}}{{/if}}</span>
+  </header>
+
+  {{#if isGear}}
+  <dl class="sw-fields">
+    <dt>{{localize "STORYWEALD.Gear.item_type"}}</dt><dd>{{system.item_type}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.category"}}</dt><dd>{{system.category}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.rarity"}}</dt><dd>{{system.rarity}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.cost"}}</dt><dd>{{system.cost}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.weight"}}</dt><dd>{{system.weight}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.consumable"}}</dt><dd>{{#if system.consumable}}&#10003;{{else}}&mdash;{{/if}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.duration"}}</dt><dd>{{system.duration}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.attunement"}}</dt><dd>{{system.attunement}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.requirement"}}</dt><dd>{{system.requirement}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.material"}}</dt><dd>{{system.material}}</dd>
+    <dt>{{localize "STORYWEALD.Gear.size_class"}}</dt><dd>{{system.size_class}}</dd>
+  </dl>
+  {{/if}}
+
+  {{#if isAbility}}
+  <dl class="sw-fields">
+    <dt>{{localize "STORYWEALD.Ability.ability_type"}}</dt><dd>{{system.ability_type}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.action"}}</dt><dd>{{system.action}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.category"}}</dt><dd>{{system.category}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.hit_roll"}}</dt><dd>{{system.hit_roll}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.damage"}}</dt><dd>{{system.damage}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.save_dc"}}</dt><dd>{{system.save_dc}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.element"}}</dt><dd>{{system.element}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.target"}}</dt><dd>{{system.target}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.range"}}</dt><dd>{{system.range}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.uses"}}</dt><dd>{{system.uses}}</dd>
+    <dt>{{localize "STORYWEALD.Ability.duration"}}</dt><dd>{{system.duration}}</dd>
+  </dl>
+  {{#if system.effects}}<div class="sw-field"><h4>{{localize "STORYWEALD.Ability.effects"}}</h4><p>{{system.effects}}</p></div>{{/if}}
+  {{#if system.mechanics}}<div class="sw-field"><h4>{{localize "STORYWEALD.Ability.mechanics"}}</h4><p>{{system.mechanics}}</p></div>{{/if}}
+  {{#if system.notes}}<div class="sw-field"><h4>{{localize "STORYWEALD.Ability.notes"}}</h4><p>{{system.notes}}</p></div>{{/if}}
+  {{/if}}
+
+  {{#if system.description}}
+  <div class="sw-bio">
+    {{!-- ponytail: sanitized HTML from StoryTeller; raw render for P1. --}}
+    {{{system.description}}}
+  </div>
+  {{/if}}
+</div>

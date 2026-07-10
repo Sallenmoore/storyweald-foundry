@@ -1,5 +1,271 @@
 /*
- * Storyweald system styles.
- * Stub in T2 so system.json's styles[] resolves — the real sheet styling
- * (dark, high-contrast, kiosk-legible) lands with the sheets in T3.
+ * Storyweald system styles (T3).
+ * Dark, high-contrast, kiosk-legible base. Everything scales from a single
+ * `--sw-scale` custom property (default 1) so a common-display / large-type mode
+ * (P3/P4) just bumps that one value on the root. Sizes use em so they track it.
  */
+
+.storyweald.sheet {
+  --sw-scale: 1;
+  --sw-bg: #14171d;
+  --sw-panel: #1d222b;
+  --sw-line: #333c49;
+  --sw-text: #f2f5f8;
+  --sw-muted: #9fb0c3;
+  --sw-accent: #6fae7a; /* pine/gilt brand-ish */
+  --sw-gilt: #d8b24a;
+
+  font-size: calc(15px * var(--sw-scale));
+  color: var(--sw-text);
+}
+
+.storyweald.sheet .window-content {
+  background: var(--sw-bg);
+  color: var(--sw-text);
+  padding: 0.75em;
+  gap: 0.6em;
+}
+
+/* Inputs read the sheet's palette instead of Foundry's light defaults. */
+.storyweald.sheet input,
+.storyweald.sheet .sw-name {
+  background: var(--sw-panel);
+  color: var(--sw-text);
+  border: 1px solid var(--sw-line);
+  border-radius: 3px;
+  font-size: 1em;
+}
+.storyweald.sheet input[readonly] {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* --- Header --------------------------------------------------------------- */
+.sw-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "portrait identity"
+    "portrait stats"
+    "saves    saves"
+    "tabs     tabs";
+  gap: 0.5em 0.75em;
+  align-items: center;
+  border-bottom: 2px solid var(--sw-line);
+  padding-bottom: 0.5em;
+}
+.sw-portrait {
+  grid-area: portrait;
+  width: 5.5em;
+  height: 5.5em;
+  object-fit: cover;
+  border: 2px solid var(--sw-gilt);
+  border-radius: 4px;
+}
+.sw-portrait-sm { width: 3.5em; height: 3.5em; }
+.sw-identity { grid-area: identity; }
+.sw-name {
+  width: 100%;
+  font-size: 1.4em;
+  font-weight: 700;
+  padding: 0.1em 0.25em;
+}
+.sw-subline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em 0.6em;
+  color: var(--sw-muted);
+  font-size: 0.9em;
+  margin-top: 0.2em;
+}
+.sw-tag {
+  color: var(--sw-gilt);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sw-stats {
+  grid-area: stats;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+.sw-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 4.5em;
+  padding: 0.25em 0.4em;
+  background: var(--sw-panel);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+}
+.sw-stat-label {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sw-muted);
+}
+.sw-stat-value { font-size: 1.2em; font-weight: 700; }
+.sw-stat-value input { width: 2.5em; text-align: center; font-weight: 700; }
+
+.sw-saves {
+  grid-area: saves;
+  display: flex;
+  gap: 0.5em;
+  justify-content: flex-start;
+}
+.sw-save {
+  display: flex;
+  gap: 0.4em;
+  align-items: baseline;
+  padding: 0.15em 0.5em;
+  background: var(--sw-panel);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+}
+.sw-save-label { color: var(--sw-muted); font-size: 0.85em; }
+.sw-save-value { font-weight: 700; }
+
+/* --- Tabs ----------------------------------------------------------------- */
+.storyweald.sheet .sheet-tabs {
+  grid-area: tabs;
+  display: flex;
+  gap: 0.25em;
+  border: 0;
+  margin: 0;
+}
+.storyweald.sheet .sheet-tabs .item {
+  flex: 1;
+  text-align: center;
+  padding: 0.4em 0.5em;
+  background: var(--sw-panel);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px 4px 0 0;
+  color: var(--sw-muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+.storyweald.sheet .sheet-tabs .item.active {
+  color: var(--sw-text);
+  border-bottom-color: var(--sw-accent);
+  box-shadow: inset 0 -3px 0 var(--sw-accent);
+}
+
+/* Only the active tab body shows. */
+.storyweald.sheet .tab { display: none; }
+.storyweald.sheet .tab.active { display: block; }
+
+/* --- Attributes + skills -------------------------------------------------- */
+.sw-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-bottom: 0.6em;
+}
+.sw-attr {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-areas: "key score" "key mod";
+  gap: 0 0.4em;
+  align-items: center;
+  padding: 0.3em 0.5em;
+  background: var(--sw-panel);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+  min-width: 4.5em;
+}
+.sw-attr-key {
+  grid-area: key;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--sw-gilt);
+}
+.sw-attr-score { grid-area: score; font-size: 1.2em; font-weight: 700; }
+.sw-attr-mod { grid-area: mod; color: var(--sw-muted); font-size: 0.85em; }
+
+.sw-skills {
+  width: 100%;
+  border-collapse: collapse;
+}
+.sw-skills th,
+.sw-skills td {
+  text-align: left;
+  padding: 0.3em 0.5em;
+  border-bottom: 1px solid var(--sw-line);
+}
+.sw-skills th {
+  color: var(--sw-muted);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+}
+.sw-skill-level { text-align: center; font-weight: 700; width: 4em; }
+
+/* --- Item lists ----------------------------------------------------------- */
+.sw-items { list-style: none; margin: 0; padding: 0; }
+.sw-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.4em 0.5em;
+  border-bottom: 1px solid var(--sw-line);
+  cursor: pointer;
+}
+.sw-item:hover { background: var(--sw-panel); }
+.sw-item-name { font-weight: 600; }
+.sw-item-meta {
+  color: var(--sw-muted);
+  font-size: 0.85em;
+  text-align: right;
+}
+
+/* --- Field grids / prose -------------------------------------------------- */
+.sw-fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25em 0.75em;
+  margin: 0 0 0.6em;
+}
+.sw-fields dt {
+  color: var(--sw-muted);
+  text-transform: uppercase;
+  font-size: 0.75em;
+  letter-spacing: 0.05em;
+  align-self: center;
+}
+.sw-fields dd { margin: 0; font-weight: 600; }
+.sw-field { margin: 0.5em 0; }
+.sw-field h4 {
+  margin: 0 0 0.15em;
+  color: var(--sw-gilt);
+  border: 0;
+}
+.sw-bio {
+  border-top: 1px solid var(--sw-line);
+  padding-top: 0.5em;
+  line-height: 1.5;
+}
+.sw-bio h3, .sw-bio h4, .sw-bio h5 { color: var(--sw-gilt); border: 0; }
+
+.sw-empty { color: var(--sw-muted); font-style: italic; padding: 0.5em; }
+
+/* --- Item sheet ----------------------------------------------------------- */
+.sw-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  border-bottom: 2px solid var(--sw-line);
+  padding-bottom: 0.5em;
+  margin-bottom: 0.6em;
+}
+.sw-type-badge {
+  color: var(--sw-gilt);
+  border: 1px solid var(--sw-gilt);
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

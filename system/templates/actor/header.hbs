@@ -1,0 +1,56 @@
+<header class="sw-header">
+  <img class="sw-portrait" src="{{actor.img}}" alt="{{actor.name}}">
+  <div class="sw-identity">
+    <input class="sw-name" type="text" name="name" value="{{actor.name}}" {{#unless editable}}readonly{{/unless}}>
+    <div class="sw-subline">
+      {{#if system.character_class}}<span>{{system.character_class}}</span>{{/if}}
+      <span>{{localize "STORYWEALD.Actor.level"}} {{system.level}}</span>
+      {{#if system.species}}<span>{{system.species}}</span>{{/if}}
+      {{#if isNpc}}
+        {{#if system.creature_type}}<span>{{system.creature_type}}</span>{{/if}}
+        {{#if system.size}}<span>{{system.size}}</span>{{/if}}
+        {{#if system.legendary}}<span class="sw-tag">{{localize "STORYWEALD.Actor.legendary"}}</span>{{/if}}
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="sw-stats">
+    <div class="sw-stat">
+      <span class="sw-stat-label">{{profile.resources.hp}}</span>
+      <span class="sw-stat-value">
+        <input type="number" name="system.hp.value" value="{{system.hp.value}}" {{#unless editable}}readonly{{/unless}}> / {{system.hp.max}}
+      </span>
+    </div>
+    <div class="sw-stat">
+      <span class="sw-stat-label">{{profile.resources.armor_class}}</span>
+      <span class="sw-stat-value">{{system.armor_class}}</span>
+    </div>
+    <div class="sw-stat">
+      <span class="sw-stat-label">{{profile.resources.attack_bonus}}</span>
+      <span class="sw-stat-value">{{system.attack_bonus}}</span>
+    </div>
+    <div class="sw-stat">
+      <span class="sw-stat-label">{{profile.resources.system_strain}}</span>
+      <span class="sw-stat-value">{{system.system_strain.value}} / {{system.system_strain.max}}</span>
+    </div>
+    <div class="sw-stat">
+      <span class="sw-stat-label">{{profile.resources.effort}}</span>
+      <span class="sw-stat-value">{{system.effort.value}} / {{system.effort.max}}</span>
+    </div>
+  </div>
+
+  <div class="sw-saves">
+    {{#each saves}}
+    <div class="sw-save">
+      <span class="sw-save-label">{{this.label}}</span>
+      <span class="sw-save-value">{{this.value}}</span>
+    </div>
+    {{/each}}
+  </div>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{#each tabs}}
+    <a class="item {{this.cssClass}}" data-action="tab" data-group="{{this.group}}" data-tab="{{this.id}}">{{localize this.label}}</a>
+    {{/each}}
+  </nav>
+</header>

@@ -1,0 +1,20 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="abilities">
+  {{#if abilityItems.length}}
+  <ul class="sw-items">
+    {{#each abilityItems}}
+    <li class="sw-item sw-ability" data-item-id="{{this.id}}" data-action="editItem">
+      <span class="sw-item-name">{{this.name}}</span>
+      <span class="sw-item-meta">
+        {{#if this.system.action}}{{this.system.action}}{{/if}}
+        {{#if this.system.category}} &middot; {{this.system.category}}{{/if}}
+        {{#if this.system.damage}} &middot; {{this.system.damage}}{{/if}}
+        {{#if this.system.save_dc}} &middot; {{this.system.save_dc}}{{/if}}
+        {{#if this.system.range}} &middot; {{this.system.range}}{{/if}}
+      </span>
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p class="sw-empty">{{localize "STORYWEALD.Empty.abilities"}}</p>
+  {{/if}}
+</section>

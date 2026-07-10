@@ -1,0 +1,19 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="inventory">
+  {{#if gear.length}}
+  <ul class="sw-items">
+    {{#each gear}}
+    <li class="sw-item" data-item-id="{{this.id}}" data-action="editItem">
+      <span class="sw-item-name">{{this.name}}</span>
+      <span class="sw-item-meta">
+        {{#if this.system.item_type}}{{this.system.item_type}}{{/if}}
+        {{#if this.system.rarity}} &middot; {{this.system.rarity}}{{/if}}
+        {{#if this.system.cost}} &middot; {{this.system.cost}}{{/if}}
+        {{#if this.system.weight}} &middot; {{this.system.weight}}{{/if}}
+      </span>
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p class="sw-empty">{{localize "STORYWEALD.Empty.inventory"}}</p>
+  {{/if}}
+</section>

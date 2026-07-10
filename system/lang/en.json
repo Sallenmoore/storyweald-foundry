@@ -61,5 +61,17 @@
   "STORYWEALD.Ability.description": "Description",
   "STORYWEALD.Ability.effects": "Effects",
   "STORYWEALD.Ability.mechanics": "Mechanics",
-  "STORYWEALD.Ability.notes": "Notes"
+  "STORYWEALD.Ability.notes": "Notes",
+
+  "STORYWEALD.Tab.skills": "Skills",
+  "STORYWEALD.Tab.inventory": "Inventory",
+  "STORYWEALD.Tab.abilities": "Abilities",
+  "STORYWEALD.Tab.biography": "Bio",
+
+  "STORYWEALD.Empty.skills": "No skills recorded.",
+  "STORYWEALD.Empty.inventory": "No gear carried.",
+  "STORYWEALD.Empty.abilities": "No abilities.",
+
+  "STORYWEALD.SheetLabel.actor": "Storyweald Actor",
+  "STORYWEALD.SheetLabel.item": "Storyweald Item"
 }
