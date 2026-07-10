@@ -338,20 +338,30 @@
 .sw-stepper {
   display: flex;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.15em;
 }
-/* Resource steppers stack +/− in a compact column left of the value (~1/3 the
- * ammo button footprint, ≥32px tap target). */
+/* Resource steppers: bare +/− glyphs stacked flush-left of the value. No chrome
+ * at rest (quiet UI); affordance shows on hover/focus. 24px = WCAG target floor. */
 .sw-step-col {
   display: inline-flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 .sw-step-col .sw-step {
-  min-width: 32px;
-  min-height: 32px;
-  font-size: 0.95em;
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  font-size: 0.8em;
+  background: none;
+  border-color: transparent;
+  color: var(--sw-muted);
   border-radius: 3px;
+}
+.sw-step-col .sw-step:hover:not(:disabled),
+.sw-step-col .sw-step:focus-visible {
+  background: var(--sw-panel);
+  border-color: var(--sw-line);
+  color: var(--sw-text);
 }
 .sw-stepper input {
   width: 2.6em;
