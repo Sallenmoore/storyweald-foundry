@@ -42,6 +42,7 @@
 
 /* --- Header --------------------------------------------------------------- */
 .sw-header {
+  position: relative;
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas:
@@ -54,6 +55,27 @@
   border-bottom: 2px solid var(--sw-line);
   padding-bottom: 0.5em;
 }
+
+/* Lock icon: toggles edit mode so max fields aren't casually re-maxed. */
+.sw-lock {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 0;
+  background: var(--sw-panel);
+  color: var(--sw-muted);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sw-lock:hover { color: var(--sw-text); border-color: var(--sw-accent); }
+.sw-editing .sw-lock { color: var(--sw-gilt); border-color: var(--sw-gilt); }
 .sw-portrait {
   grid-area: portrait;
   width: 5.5em;
@@ -63,7 +85,7 @@
   border-radius: 4px;
 }
 .sw-portrait-sm { width: 3.5em; height: 3.5em; }
-.sw-identity { grid-area: identity; }
+.sw-identity { grid-area: identity; padding-right: 3em; } /* clear the absolute lock */
 .sw-name {
   width: 100%;
   font-size: 1.4em;
@@ -249,6 +271,10 @@
 }
 .sw-roll-btn {
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px; /* kiosk tap target */
   font-size: 0.8em;
   font-weight: 700;
   text-transform: uppercase;
@@ -261,9 +287,80 @@
   line-height: 1;
   width: auto;
 }
+.sw-roll-btn:disabled { opacity: 0.4; cursor: default; }
+.sw-btn-ghost { color: var(--sw-muted); }
 .sw-roll-attack { border-color: var(--sw-gilt); color: var(--sw-gilt); }
 .sw-roll-damage { border-color: var(--sw-accent); color: var(--sw-accent); }
-.sw-roll-btn:hover { background: var(--sw-line); }
+.sw-roll-btn:hover:not(:disabled) { background: var(--sw-line); }
+
+/* --- Steppers / resources / uses / ammo (T3) ------------------------------ */
+/* −/+ buttons carry a 44px kiosk tap target; used by HP/strain/effort + ammo. */
+.sw-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  width: auto;
+  padding: 0;
+  font-size: 1.3em;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--sw-panel);
+  color: var(--sw-text);
+  border: 1px solid var(--sw-line);
+  border-radius: 4px;
+  cursor: pointer;
+}
+.sw-step:hover:not(:disabled) { background: var(--sw-line); border-color: var(--sw-accent); }
+.sw-step:disabled { opacity: 0.4; cursor: default; }
+
+.sw-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.sw-stepper input {
+  width: 2.6em;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+.sw-stat-sep { color: var(--sw-muted); padding: 0 0.1em; }
+/* Max fields sit disabled until the header lock is opened. */
+.sw-max:disabled { opacity: 0.55; }
+.sw-editing .sw-max { border-color: var(--sw-gilt); opacity: 1; }
+
+/* Ability uses counter + spend/reset. */
+.sw-uses {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  flex-shrink: 0;
+}
+.sw-uses-count {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.sw-uses-sep, .sw-uses-period { color: var(--sw-muted); font-weight: 400; }
+.sw-uses-period { font-size: 0.85em; }
+.sw-uses-text { color: var(--sw-muted); font-size: 0.85em; font-style: italic; flex-shrink: 0; }
+
+/* Weapon ammo counter on inventory rows (.sw-item-main handles name/meta flex). */
+.sw-gear-weapon { align-items: center; gap: 0.5em; }
+.sw-ammo {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  flex-shrink: 0;
+}
+.sw-ammo-count {
+  min-width: 1.8em;
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
 
 /* --- Chat roll card ------------------------------------------------------- */
 /* Chat renders outside the sheet, so the palette is redeclared here. */

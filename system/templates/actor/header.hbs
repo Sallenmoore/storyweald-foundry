@@ -1,4 +1,10 @@
-<header class="sw-header">
+<header class="sw-header {{#if editMode}}sw-editing{{/if}}">
+  {{#if editable}}
+  <button type="button" class="sw-lock" data-action="toggleEdit"
+    title="{{#if editMode}}{{localize "STORYWEALD.Edit.lock"}}{{else}}{{localize "STORYWEALD.Edit.unlock"}}{{/if}}">
+    <i class="fa-solid {{#if editMode}}fa-lock-open{{else}}fa-lock{{/if}}"></i>
+  </button>
+  {{/if}}
   <img class="sw-portrait" src="{{actor.img}}" alt="{{actor.name}}">
   <div class="sw-identity">
     <input class="sw-name" type="text" name="name" value="{{actor.name}}" {{#unless editable}}readonly{{/unless}}>
@@ -15,12 +21,18 @@
   </div>
 
   <div class="sw-stats">
-    <div class="sw-stat">
-      <span class="sw-stat-label">{{profile.resources.hp}}</span>
-      <span class="sw-stat-value">
-        <input type="number" name="system.hp.value" value="{{system.hp.value}}" {{#unless editable}}readonly{{/unless}}> / {{system.hp.max}}
-      </span>
+    {{#each resourceStats}}
+    <div class="sw-stat sw-resource">
+      <span class="sw-stat-label">{{this.label}}</span>
+      <div class="sw-stat-value sw-stepper">
+        <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="-1" title="−1" {{#unless ../editable}}disabled{{/unless}}>&minus;</button>
+        <input type="number" name="system.{{this.key}}.value" value="{{this.value}}" min="0" {{#unless ../editable}}readonly{{/unless}}>
+        <button type="button" class="sw-step" data-action="adjustResource" data-resource="{{this.key}}" data-delta="1" title="+1" {{#unless ../editable}}disabled{{/unless}}>+</button>
+        <span class="sw-stat-sep">/</span>
+        <input type="number" class="sw-max" name="system.{{this.key}}.max" value="{{this.max}}" min="0" {{#unless ../editMode}}disabled{{/unless}}>
+      </div>
     </div>
+    {{/each}}
     <div class="sw-stat">
       <span class="sw-stat-label">{{profile.resources.armor_class}}</span>
       <span class="sw-stat-value">{{system.armor_class}}</span>
@@ -28,14 +40,6 @@
     <div class="sw-stat">
       <span class="sw-stat-label">{{profile.resources.attack_bonus}}</span>
       <span class="sw-stat-value">{{system.attack_bonus}}</span>
-    </div>
-    <div class="sw-stat">
-      <span class="sw-stat-label">{{profile.resources.system_strain}}</span>
-      <span class="sw-stat-value">{{system.system_strain.value}} / {{system.system_strain.max}}</span>
-    </div>
-    <div class="sw-stat">
-      <span class="sw-stat-label">{{profile.resources.effort}}</span>
-      <span class="sw-stat-value">{{system.effort.value}} / {{system.effort.max}}</span>
     </div>
   </div>
 

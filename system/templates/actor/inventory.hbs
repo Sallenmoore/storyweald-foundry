@@ -2,14 +2,23 @@
   {{#if gear.length}}
   <ul class="sw-items">
     {{#each gear}}
-    <li class="sw-item" data-item-id="{{this.id}}" data-action="editItem">
-      <span class="sw-item-name">{{this.name}}</span>
-      <span class="sw-item-meta">
-        {{#if this.system.item_type}}{{this.system.item_type}}{{/if}}
-        {{#if this.system.rarity}} &middot; {{this.system.rarity}}{{/if}}
-        {{#if this.system.cost}} &middot; {{this.system.cost}}{{/if}}
-        {{#if this.system.weight}} &middot; {{this.system.weight}}{{/if}}
-      </span>
+    <li class="sw-item{{#if this.isWeapon}} sw-gear-weapon{{/if}}" data-item-id="{{this.id}}">
+      <div class="sw-item-main" data-action="editItem">
+        <span class="sw-item-name">{{this.name}}</span>
+        <span class="sw-item-meta">
+          {{#if this.system.item_type}}{{this.system.item_type}}{{/if}}
+          {{#if this.system.rarity}} &middot; {{this.system.rarity}}{{/if}}
+          {{#if this.system.cost}} &middot; {{this.system.cost}}{{/if}}
+          {{#if this.system.weight}} &middot; {{this.system.weight}}{{/if}}
+        </span>
+      </div>
+      {{#if this.isWeapon}}
+      <div class="sw-ammo" title="{{localize "STORYWEALD.Gear.ammo"}}">
+        <button type="button" class="sw-step" data-action="fireAmmo" title="{{localize "STORYWEALD.Gear.fire"}}" {{#unless this.ammo}}disabled{{/unless}}>&minus;</button>
+        <span class="sw-ammo-count">{{this.ammo}}</span>
+        <button type="button" class="sw-step" data-action="reloadAmmo" title="{{localize "STORYWEALD.Gear.reload"}}">+</button>
+      </div>
+      {{/if}}
     </li>
     {{/each}}
   </ul>

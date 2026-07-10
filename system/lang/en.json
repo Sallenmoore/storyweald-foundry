@@ -66,6 +66,15 @@
   "STORYWEALD.Roll.attack": "Attack",
   "STORYWEALD.Roll.damage": "Damage",
 
+  "STORYWEALD.Edit.lock": "Lock maximums",
+  "STORYWEALD.Edit.unlock": "Edit maximums",
+  "STORYWEALD.Uses.spend": "Spend",
+  "STORYWEALD.Uses.reset": "Reset uses",
+
+  "STORYWEALD.Gear.ammo": "Ammo",
+  "STORYWEALD.Gear.fire": "Fire (−1 ammo)",
+  "STORYWEALD.Gear.reload": "Reload (+1 ammo)",
+
   "STORYWEALD.Tab.skills": "Skills",
   "STORYWEALD.Tab.inventory": "Inventory",
   "STORYWEALD.Tab.abilities": "Abilities",

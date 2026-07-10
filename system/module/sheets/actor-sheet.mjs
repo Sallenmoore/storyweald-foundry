@@ -1,4 +1,8 @@
 import { skillRoll, attackRoll, damageRoll, saveRoll } from "../rolls.mjs";
+import { parseUses } from "../uses.mjs";
+
+// The three {value, max} resources that get steppers on the header strip.
+const STEPPED = ["hp", "system_strain", "effort"];
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -25,8 +29,18 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
       rollSave: this._onRollSave,
       rollAttack: this._onRollAttack,
       rollDamage: this._onRollDamage,
+      toggleEdit: this._onToggleEdit,
+      adjustResource: this._onAdjustResource,
+      spendUse: this._onSpendUse,
+      resetUses: this._onResetUses,
+      fireAmmo: this._onFireAmmo,
+      reloadAmmo: this._onReloadAmmo,
     },
   };
+
+  // Max fields (hp/strain/effort max, editable stats) are locked by default so a
+  // casual tap at the table can't re-max a stat; the header lock toggles this.
+  _editMode = false;
 
   // Header (portrait + identity + stat strip + tab nav) is always rendered; each
   // remaining PART is one tab body. PART id === tab id so _preparePartContext can
@@ -65,18 +79,46 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     context.saves = Object.entries(context.profile?.saves ?? {}).map(
       ([key, label]) => ({ key, label, value: this.document.system.saves?.[key] }),
     );
-    context.gear = this.document.items.filter((i) => i.type === "gear");
-    // Ability rows carry precomputed rollability so the template shows an
-    // attack/damage button only when rolls.mjs can build a formula for it.
-    context.abilityItems = this.document.items
-      .filter((i) => i.type === "ability")
+    // Edit mode only exists on an editable sheet; the template disables max
+    // inputs and hides the unlock cue otherwise.
+    context.editMode = this._editMode && this.isEditable;
+    const labels = context.profile?.resources ?? {};
+    context.resourceStats = STEPPED.map((key) => ({
+      key,
+      label: labels[key] ?? key,
+      ...this.document.system[key],
+    }));
+    // Gear rows precompute weapon-ness + ammo flags so weapons get an ammo
+    // counter (flags.storyweald.ammo — Foundry-local play state, reset on re-push).
+    context.gear = this.document.items
+      .filter((i) => i.type === "gear")
       .map((i) => ({
         id: i.id,
         name: i.name,
         system: i.system,
-        canAttack: attackRoll(context.profile, i) !== null,
-        canDamage: damageRoll(context.profile, i) !== null,
+        isWeapon: i.system.item_type === "weapon",
+        ammo: i.getFlag("storyweald", "ammo") ?? 0,
       }));
+    // Ability rows carry precomputed rollability so the template shows an
+    // attack/damage button only when rolls.mjs can build a formula for it, plus
+    // parsed `uses` -> a spend counter (flags.storyweald.spent) or display-only text.
+    context.abilityItems = this.document.items
+      .filter((i) => i.type === "ability")
+      .map((i) => {
+        const uses = parseUses(i.system.uses);
+        const spent = i.getFlag("storyweald", "spent") ?? 0;
+        return {
+          id: i.id,
+          name: i.name,
+          system: i.system,
+          canAttack: attackRoll(context.profile, i) !== null,
+          canDamage: damageRoll(context.profile, i) !== null,
+          uses: uses
+            ? { max: uses.max, period: uses.period, remaining: Math.max(0, uses.max - spent) }
+            : null,
+          usesText: uses ? null : i.system.uses || null,
+        };
+      });
     // Explicit rather than trusting the super chain to preserve it.
     context.tabs = this._prepareTabs("primary");
     return context;
@@ -111,6 +153,53 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
   static _onRollDamage(event, target) {
     const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
     if (item) this._postRoll(damageRoll(this._profile, item), `${item.name} — Damage`);
+  }
+
+  /** Flip the max-field lock and re-render (button state is declarative). */
+  static _onToggleEdit(event, target) {
+    this._editMode = !this._editMode;
+    this.render();
+  }
+
+  /** −/+ a {value,max} resource, clamped to 0..max. */
+  static _onAdjustResource(event, target) {
+    const key = target.dataset.resource;
+    const res = this.document.system[key];
+    if (!res) return;
+    const value = Math.clamp(res.value + Number(target.dataset.delta), 0, res.max);
+    this.document.update({ [`system.${key}.value`]: value });
+  }
+
+  /** Spend one ability use: bump the owned item's `spent` flag, capped at max. */
+  static _onSpendUse(event, target) {
+    const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
+    if (!item) return;
+    const max = Number(target.dataset.max);
+    const spent = item.getFlag("storyweald", "spent") ?? 0;
+    if (spent < max) item.setFlag("storyweald", "spent", spent + 1);
+  }
+
+  /** Reset an ability's spent uses back to zero. */
+  static _onResetUses(event, target) {
+    const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
+    item?.setFlag("storyweald", "spent", 0);
+  }
+
+  /** Fire a round: decrement the weapon's ammo flag, floored at 0. */
+  static _onFireAmmo(event, target) {
+    const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
+    if (!item) return;
+    const ammo = item.getFlag("storyweald", "ammo") ?? 0;
+    if (ammo > 0) item.setFlag("storyweald", "ammo", ammo - 1);
+  }
+
+  /** Reload: load one round. ponytail: no magazine capacity in the contract, so
+   *  a full reload is repeated taps; add a capacity flag if the export gains one. */
+  static _onReloadAmmo(event, target) {
+    const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
+    if (!item) return;
+    const ammo = item.getFlag("storyweald", "ammo") ?? 0;
+    item.setFlag("storyweald", "ammo", ammo + 1);
   }
 
   get _profile() {

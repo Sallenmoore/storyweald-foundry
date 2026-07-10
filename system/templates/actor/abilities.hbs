@@ -17,6 +17,15 @@
         {{#if this.canAttack}}<button type="button" class="sw-roll-btn sw-roll-attack" data-action="rollAttack" title="Roll attack">{{localize "STORYWEALD.Roll.attack"}}</button>{{/if}}
         {{#if this.canDamage}}<button type="button" class="sw-roll-btn sw-roll-damage" data-action="rollDamage" title="Roll damage">{{localize "STORYWEALD.Roll.damage"}}</button>{{/if}}
       </div>
+      {{#if this.uses}}
+      <div class="sw-uses">
+        <span class="sw-uses-count" title="{{localize "STORYWEALD.Ability.uses"}}">{{this.uses.remaining}}<span class="sw-uses-sep">/</span>{{this.uses.max}}{{#if this.uses.period}} <span class="sw-uses-period">/ {{this.uses.period}}</span>{{/if}}</span>
+        <button type="button" class="sw-roll-btn" data-action="spendUse" data-max="{{this.uses.max}}" title="{{localize "STORYWEALD.Uses.spend"}}" {{#unless this.uses.remaining}}disabled{{/unless}}>{{localize "STORYWEALD.Uses.spend"}}</button>
+        <button type="button" class="sw-roll-btn sw-btn-ghost" data-action="resetUses" title="{{localize "STORYWEALD.Uses.reset"}}"><i class="fa-solid fa-rotate-left"></i></button>
+      </div>
+      {{else if this.usesText}}
+      <span class="sw-uses-text" title="{{localize "STORYWEALD.Ability.uses"}}">{{this.usesText}}</span>
+      {{/if}}
     </li>
     {{/each}}
   </ul>
