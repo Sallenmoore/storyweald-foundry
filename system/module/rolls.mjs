@@ -31,17 +31,23 @@ export function sanitizeBonus(raw) {
 /**
  * A dice expression ("2d6 + 4", "1d8+2", "d6") -> normalized formula, else null.
  * Requires at least one die term, so flat numbers ("5") and prose ("see text",
- * "WIS Save") null out. Normalizes case and operator spacing so output is stable.
+ * "WIS Save") null out. A trailing damage-type descriptor is common in generated
+ * content ("2d6 + 4 shock damage") — we keep the leading roll and drop the words
+ * rather than nulling the whole thing. Normalizes case and operator spacing.
  */
 export function sanitizeDice(raw) {
   if (typeof raw !== "string") return null;
-  let s = raw.trim().toLowerCase().replace(/^\+\s*/, "").replace(/\s+/g, " ");
+  let s = raw.trim().toLowerCase().replace(/^\+\s*/, "").replace(/\s+/g, " ").replace(/[.,;:]+$/, "");
   if (!s) return null;
-  // Whole string must be dice/number terms joined by + or -.
-  const term = "(\\d*d\\d+|\\d+)";
-  if (!new RegExp(`^${term}(\\s*[+-]\\s*${term})*$`).test(s)) return null;
-  if (!/d\d/.test(s)) return null; // must contain a die, not just numbers
-  return s.replace(/\s*([+-])\s*/g, " $1 ");
+  // Leading dice/number expression + an OPTIONAL trailing word-only descriptor.
+  // The suffix has no digits/dice, so genuine prose ("see text") still fails the
+  // leading match and nulls out; only a real roll followed by a type survives.
+  const term = "(?:\\d*d\\d+|\\d+)";
+  const m = s.match(new RegExp(`^(${term}(?:\\s*[+-]\\s*${term})*)(?:\\s+[a-z][a-z ]*)?$`));
+  if (!m) return null;
+  const formula = m[1];
+  if (!/d\d/.test(formula)) return null; // must contain a die, not just numbers
+  return formula.replace(/\s*([+-])\s*/g, " $1 ");
 }
 
 /** Skill check: 2d6 + skill rank (SWN convention). null if the actor lacks it. */

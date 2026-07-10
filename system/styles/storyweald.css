@@ -19,11 +19,31 @@
   color: var(--sw-text);
 }
 
+/* Bounded flex column so the header stays put and the active tab body scrolls
+ * (ApplicationV2 gives .window-content a fixed height; default overflow clips it).
+ * Parts may sit directly in .window-content or inside its form child — flex both. */
 .storyweald.sheet .window-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden auto; /* tab scrolls itself; this catches any nesting the flex chain misses */
   background: var(--sw-bg);
   color: var(--sw-text);
   padding: 0.75em;
   gap: 0.6em;
+}
+.storyweald.sheet .window-content > form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 0.6em;
+}
+.storyweald.sheet .sw-header { flex: 0 0 auto; }
+.storyweald.sheet .tab.active {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* Inputs read the sheet's palette instead of Foundry's light defaults. */

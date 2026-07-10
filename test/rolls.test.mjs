@@ -40,10 +40,19 @@ test("sanitizeDice passes dice expressions, nulls garbage", () => {
   assert.equal(sanitizeDice("+1d4"), "1d4"); // leading + stripped
   assert.equal(sanitizeDice("see text"), null);
   assert.equal(sanitizeDice("WIS Save"), null);
-  assert.equal(sanitizeDice("2d6 + 4 fire"), null); // trailing prose
   assert.equal(sanitizeDice("5"), null); // flat number, no die
   assert.equal(sanitizeDice(""), null);
   assert.equal(sanitizeDice(null), null);
+});
+
+// Generated damage strings routinely carry a trailing damage type; keep the roll.
+test("sanitizeDice strips a trailing damage-type descriptor", () => {
+  assert.equal(sanitizeDice("2d6 + 4 fire"), "2d6 + 4");
+  assert.equal(sanitizeDice("2d6 + 4 shock damage"), "2d6 + 4");
+  assert.equal(sanitizeDice("1d8+2 force damage"), "1d8 + 2");
+  assert.equal(sanitizeDice("1d6 cold damage."), "1d6");
+  // still nulls when there's no leading roll, only prose
+  assert.equal(sanitizeDice("roll 2d6 fire"), null);
 });
 
 test("skillRoll bakes the skill rank into the 2d6 formula", () => {
