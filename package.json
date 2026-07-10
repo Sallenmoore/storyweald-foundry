@@ -1,6 +1,6 @@
 {
   "name": "storyweald-foundry",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Storyweald game system for Foundry VTT — data-driven ruleset profiles (SWN first).",

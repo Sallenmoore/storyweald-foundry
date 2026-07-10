@@ -14,8 +14,15 @@ Number first; Other Dust and a genre-neutral western profile planned.
   field-for-field; contract bumps are coordinated releases.
 - **Table mode**: sheets stay legible at coffee-table/kiosk distance (pairs with Monk's Common
   Display + Hide Player UI — see `TABLE.md`).
-- Roadmap: clickable 2d6 skill rolls, attacks/damage/saves, SWN initiative, resource tracking,
-  live drive from the Storyweald GM deck.
+- **Clickable rolls**: 2d6 skill checks, d20 attack/damage/save rolls, all posted as styled chat
+  cards. Roll formulas come from the active ruleset profile, so sheets stay ruleset-agnostic.
+- **LLM-content sanitizers**: ability/gear fields are generated text, not trusted formulas — a
+  garbage `damage` string disables the roll button instead of crashing the roller.
+- **Resource tracking**: HP / system strain / effort with −/+ steppers and a max-lock (casual clicks
+  can't re-max a stat), ability `uses` ("3/day" parsed leniently) with a spend button, and weapon
+  ammo decrement. Play-time state lives in Foundry flags; Storyweald stays canonical between sessions.
+- **SWN initiative**: `1d8 + DEX mod` wired into Foundry's combat tracker.
+- Roadmap: live drive from the Storyweald GM deck.
 
 ## Install
 
