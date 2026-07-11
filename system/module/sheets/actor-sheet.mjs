@@ -82,10 +82,13 @@ export class StorywealdActorSheet extends HandlebarsApplicationMixin(ActorSheetV
     // Edit mode only exists on an editable sheet; the template disables max
     // inputs and hides the unlock cue otherwise.
     context.editMode = this._editMode && this.isEditable;
+    // Only step the {value,max} resources the active profile declares — frontier
+    // omits system_strain/effort, so those render no stepper even though the data
+    // model still carries the fields.
     const labels = context.profile?.resources ?? {};
-    context.resourceStats = STEPPED.map((key) => ({
+    context.resourceStats = STEPPED.filter((key) => labels[key]).map((key) => ({
       key,
-      label: labels[key] ?? key,
+      label: labels[key],
       ...this.document.system[key],
     }));
     // Gear rows precompute weapon-ness + ammo flags so weapons get an ammo

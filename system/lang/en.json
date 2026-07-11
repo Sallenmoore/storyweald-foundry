@@ -85,5 +85,8 @@
   "STORYWEALD.Empty.abilities": "No abilities.",
 
   "STORYWEALD.SheetLabel.actor": "Storyweald Actor",
-  "STORYWEALD.SheetLabel.item": "Storyweald Item"
+  "STORYWEALD.SheetLabel.item": "Storyweald Item",
+
+  "STORYWEALD.Settings.profile.name": "Ruleset Profile",
+  "STORYWEALD.Settings.profile.hint": "Which ruleset the sheets and rolls use for this world. Changing it reloads Foundry."
 }

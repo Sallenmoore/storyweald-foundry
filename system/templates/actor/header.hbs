@@ -35,14 +35,18 @@
       </div>
     </div>
     {{/each}}
+    {{#if profile.resources.armor_class}}
     <div class="sw-stat">
       <span class="sw-stat-label">{{profile.resources.armor_class}}</span>
       <span class="sw-stat-value">{{system.armor_class}}</span>
     </div>
+    {{/if}}
+    {{#if profile.resources.attack_bonus}}
     <div class="sw-stat">
       <span class="sw-stat-label">{{profile.resources.attack_bonus}}</span>
       <span class="sw-stat-value">{{system.attack_bonus}}</span>
     </div>
+    {{/if}}
   </div>
 
   <div class="sw-saves">

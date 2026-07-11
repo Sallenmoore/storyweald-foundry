@@ -3,7 +3,7 @@
 A data-driven game system for [Foundry Virtual Tabletop](https://foundryvtt.com/), built as the
 table-side companion to [Storyweald](https://storyweald.com) (AI-powered TTRPG world-building and
 campaign management). One system id (`storyweald`), multiple **ruleset profiles** — Stars Without
-Number first; Other Dust and a genre-neutral western profile planned.
+Number and a genre-neutral Frontier Western, GM-selectable per world.
 
 ## What it does
 
@@ -23,6 +23,23 @@ Number first; Other Dust and a genre-neutral western profile planned.
   ammo decrement. Play-time state lives in Foundry flags; Storyweald stays canonical between sessions.
 - **SWN initiative**: `1d8 + DEX mod` wired into Foundry's combat tracker.
 - Roadmap: live drive from the Storyweald GM deck.
+
+## Ruleset profiles
+
+A **profile** is a data table (`system/module/profiles/*.mjs`) of dice conventions, resource labels,
+attributes, saves and a skill list. The sheets and roll engine read whichever profile is active, so
+they stay ruleset-agnostic. Two ship today:
+
+| id | Label | Skill / init | Notes |
+|---|---|---|---|
+| `swn` | Stars Without Number | 2d6 skill, 1d8 init | HP / system strain / effort resources |
+| `frontier` | Frontier Western | 1d20 skill, 1d10 init | Genre-neutral western; omits strain/effort |
+
+Pick one per world in **Game Settings → Configure Settings → Storyweald → Ruleset Profile** (world
+scope, GM-only). Changing it reloads Foundry. Adding a profile is a new `profiles/<id>.mjs` mirroring
+the shape and a line in the `PROFILES` map + settings `choices` in `module/storyweald.mjs` — no sheet
+or roll code changes. Labels are genre-neutral by design (mechanics-level compatibility, no ruleset
+trademark text).
 
 ## Install
 

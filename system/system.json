@@ -2,7 +2,7 @@
   "id": "storyweald",
   "title": "Storyweald",
   "description": "Storyweald game system for Foundry VTT — data-driven ruleset profiles (Stars Without Number first). Actors and items are pushed from the Storyweald / StoryTeller world-builder through a versioned export contract.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "compatibility": {
     "minimum": "12",
     "verified": "14"

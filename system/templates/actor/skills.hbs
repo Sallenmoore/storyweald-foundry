@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       {{#each system.skills}}
-      <tr class="sw-skill-row" data-action="rollSkill" data-skill="{{this.name}}" title="Roll {{this.name}} (2d6)">
+      <tr class="sw-skill-row" data-action="rollSkill" data-skill="{{this.name}}" title="Roll {{this.name}} ({{../profile.dice.skill}})">
         <td>{{this.name}}</td>
         <td class="sw-skill-level">{{this.level}}</td>
       </tr>
