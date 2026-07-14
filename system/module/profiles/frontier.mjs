@@ -31,9 +31,9 @@ export const FRONTIER = {
   // The genre has no system strain / effort, so the profile OMITS them: the
   // actor sheet renders a stepper only for resources a profile declares here.
   resources: {
-    hp: "HP",
-    armor_class: "AC",
-    attack_bonus: "Attack Bonus",
+    hp: "Health",
+    armor_class: "Guard",
+    attack_bonus: "Shot Clock",
   },
 
   // Same six attribute keys as the contract; matching keys let @attributes.dex

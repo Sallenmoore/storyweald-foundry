@@ -60,4 +60,22 @@ export class StorywealdActorBase extends foundry.abstract.TypeDataModel {
       biography: new fields.HTMLField({ initial: "" }),
     };
   }
+
+  /**
+   * Body / Reflex / Will now DERIVE from their governing attribute + level,
+   * replacing the stored contract value so the sheet always reflects the current
+   * attributes. SWN-style save target: roll 1d20 HIGH, meet-or-beat (see
+   * rolls.mjs saveRoll) — a better attribute or higher level lowers the target.
+   * Body ← CON, Reflex ← DEX, Will ← WIS; the modifier is the d20 floor
+   * ((score-10)/2), matching the export contract's own modifier formula.
+   */
+  prepareDerivedData() {
+    const lvl = this.level ?? 1;
+    const mod = (attr) =>
+      Math.floor((((this.attributes?.[attr]?.score) ?? 10) - 10) / 2);
+    const saveTarget = (attr) => Math.max(2, 15 - mod(attr) - lvl);
+    this.saves.physical = saveTarget("con"); // Body
+    this.saves.evasion = saveTarget("dex"); // Reflex
+    this.saves.mental = saveTarget("wis"); // Will
+  }
 }
