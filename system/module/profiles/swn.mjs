@@ -32,6 +32,12 @@ export const SWN = {
     effort: "Effort",
   },
 
+  // Non-resource field labels (header level, biography speed).
+  labels: {
+    level: "Level",
+    speed: "Speed",
+  },
+
   // The six attributes, in display order, with their labels. Keys match
   // system.attributes.<key>.
   attributes: {

@@ -1,5 +1,5 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="biography">
-  {{#if system.speed}}<div class="sw-field"><strong>{{localize "STORYWEALD.Actor.speed"}}:</strong> {{system.speed}}</div>{{/if}}
+  {{#if system.speed}}<div class="sw-field"><strong>{{profile.labels.speed}}:</strong> {{system.speed}}</div>{{/if}}
   {{#if system.goals}}<div class="sw-field"><h4>{{localize "STORYWEALD.Actor.goals"}}</h4><p>{{system.goals}}</p></div>{{/if}}
   <div class="sw-bio">
     {{!-- ponytail: exported biography is already sanitized HTML from StoryTeller; raw render is fine for P1. Enrich (@UUID / inline rolls) only if that content ever appears. --}}

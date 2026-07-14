@@ -36,6 +36,13 @@ export const FRONTIER = {
     attack_bonus: "Shot Clock",
   },
 
+  // Non-resource field labels (header level, biography speed) — per-profile so the
+  // frontier skin reads Rank/Pace while SWN keeps Level/Speed.
+  labels: {
+    level: "Rank",
+    speed: "Pace",
+  },
+
   // Same six attribute keys as the contract; matching keys let @attributes.dex
   // (initiative) and the data model resolve regardless of active profile.
   attributes: {

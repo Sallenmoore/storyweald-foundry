@@ -10,7 +10,7 @@
     <input class="sw-name" type="text" name="name" value="{{actor.name}}" {{#unless editable}}readonly{{/unless}}>
     <div class="sw-subline">
       {{#if system.character_class}}<span>{{system.character_class}}</span>{{/if}}
-      <span>{{localize "STORYWEALD.Actor.level"}} {{system.level}}</span>
+      <span>{{profile.labels.level}} {{system.level}}</span>
       {{#if system.species}}<span>{{system.species}}</span>{{/if}}
       {{#if isNpc}}
         {{#if system.creature_type}}<span>{{system.creature_type}}</span>{{/if}}
