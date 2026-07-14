@@ -54,3 +54,29 @@ Hooks.once("init", () => {
     label: "STORYWEALD.SheetLabel.item",
   });
 });
+
+// StoryTeller integration reminder: the headless foundryapi bridge signs in as a
+// Gamemaster user named `api`; if it is missing (or its password doesn't match
+// foundryapi's FOUNDRY_API_PASSWORD) world pushes and live-drive silently no-op.
+// Nudge the GM to set it up — but only when the user is actually absent, so a
+// correctly-configured world stays quiet (no reminder on every open).
+Hooks.once("ready", async () => {
+  if (!game.user?.isGM) return;
+  const hasApiUser = game.users.some(
+    (u) => u.name === "api" && u.role >= CONST.USER_ROLES.GAMEMASTER,
+  );
+  if (hasApiUser) return;
+  await foundry.applications.api.DialogV2.prompt({
+    window: { title: "StoryTeller — set up the API account" },
+    content: `
+      <p>This world has no <b>Gamemaster</b> user named <code>api</code>. StoryTeller's
+      live table integration (foundryapi) signs in as that user — without it, world
+      pushes and live-drive <b>silently do nothing</b>.</p>
+      <p><b>Fix:</b> create a Gamemaster user named <code>api</code> and set its password
+      to your foundryapi <code>FOUNDRY_API_PASSWORD</code>.</p>
+      <p>Retrieve the password on the host:</p>
+      <pre>docker exec foundryapi printenv FOUNDRY_API_PASSWORD</pre>`,
+    ok: { label: "Got it" },
+    rejectClose: false,
+  });
+});
