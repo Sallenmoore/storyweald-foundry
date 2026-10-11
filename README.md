@@ -1,3 +1,5 @@
+> **Archived 2026-10-11.** The StoryWeald Foundry VTT connector is retired (StoryTeller #3865). Live play now runs through storybit and the StoryWeald table view. This repository is kept read-only for reference.
+
 # Storyweald — Foundry VTT Game System
 
 A data-driven game system for [Foundry Virtual Tabletop](https://foundryvtt.com/), built as the
